@@ -4,8 +4,7 @@ import time
 import random
 import unicodedata
 
-# Lirik lagu beserta durasinya
-# PERBAIKAN: Baris terakhir sudah ditambah durasi (4.5 detik) agar tidak error
+# lirik lagu dan durasi
 LYRICS = [
     ("So, what if I call", 4),
     ("And you pick up the phone?", 5),
@@ -16,7 +15,7 @@ LYRICS = [
     ("Merry Christmas, I miss you", 5), 
 ]
 
-# Set karakter Unicode estetik pilihanmu
+# efek salju
 FLAKES = ["⋆", "꙳", "•", "❅", "‧", "❆", "₊"]
 WIDTH = 70
 HEIGHT = 22
@@ -53,40 +52,34 @@ def get_visual_length(text):
 def render(lyric: str, snow: list[list[str]]) -> str:
     """Mengatur pergerakan salju estetik dan menampilkan lirik dengan benar"""
     
-    # Geser salju ke bawah (logic dari bawah ke atas)
+    # geser salju ke bawah (logic dari bawah ke atas)
     for r in range(HEIGHT - 1, 0, -1):
         for c in range(WIDTH):
             if snow[r - 1][c] != " ":
-                # Kecepatan sedang
+                # kecepatan salju jatuh
                 if random.random() < 0.09:
                     snow[r][c] = snow[r - 1][c]
                     snow[r - 1][c] = " "
 
-    # Bersihkan baris paling bawah secara berkala
     for c in range(WIDTH):
         if random.random() < 0.10:
             snow[HEIGHT - 1][c] = " "
 
-    # Spawn salju baru di baris paling atas
     for c in range(WIDTH):
         if snow[0][c] == " ":
-            # PERBAIKAN: Peluang diturunkan ke 0.015 agar salju lebih sedikit & bersih
             snow[0][c] = random.choice(FLAKES) if random.random() < 0.010 else " "
     
-    # Duplikat frame untuk rendering teks tanpa merusak array utama salju
     frame = [row[:] for row in snow]
     mid_row = HEIGHT * 3 // 5
     
-    # Menghitung posisi tengah lirik berdasarkan panjang visual
     lyric_visual_len = get_visual_length(lyric)
     start_col = (WIDTH - lyric_visual_len) // 2
     
-    # Beri ruang kosong di sekitar lirik
     for r_offset in [-1, 0, 1]:
         if 0 <= mid_row + r_offset < HEIGHT:
             frame[mid_row + r_offset] = [" "] * WIDTH
             
-    # Tempel lirik di tengah layar
+    # lirik di tengah
     col = start_col
     for ch in lyric:
         char_len = 2 if unicodedata.east_asian_width(ch) in ('W', 'F') else 1
@@ -105,10 +98,9 @@ def render_simple_text(lines, pad_rows=0):
     total_text_rows = len(lines)
     start_row = (HEIGHT - total_text_rows) // 2 + pad_rows
     
-    # Membuat canvas kosong
+    # membuat canvas kosong
     frame = [[" "] * WIDTH for _ in range(HEIGHT)]
     
-    # Menempel teks baris per baris
     for i, text in enumerate(lines):
         r = start_row + i
         if 0 <= r < HEIGHT:
@@ -129,7 +121,6 @@ def render_simple_text(lines, pad_rows=0):
     return "\n".join("".join(row) for row in frame)
 
 def main():
-    # Diinisialisasi kosong total agar salju turun bertahap
     snow = [[" "] * WIDTH for _ in range(HEIGHT)]
     pad = get_padding()
     
