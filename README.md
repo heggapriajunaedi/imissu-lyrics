@@ -8,9 +8,20 @@ Animated terminal visualization of *"Merry Christmas, I Miss You"* by **Ghost**,
 
 ## Usage
 
+### 1. Clone repository
+
+```bash
+git clone https://github.com/heggapriajunaedi/python-lyrics.git
+cd python-lyrics
+```
+
+### 2. Jalankan
+
 ```bash
 python imissu.py
 ```
+
+> Jika `python` tidak dikenali, coba `python3 imissu.py`.
 
 Press `Ctrl+C` to exit.
 
