@@ -1,33 +1,50 @@
-# python-lyrics
+# imissu-lyrics
 
-Animated terminal visualization of *"Merry Christmas, I Miss You"* by **Ghost**, featuring falling snow effects and timed lyrics.
+An animated visualizer of *"Merry Christmas, I Miss You"* by **Ghost**, featuring a falling snow effect and lyrics synchronized to the music. Available in two versions: a terminal-based renderer written in Python and a graphical 60 FPS renderer built with C++ and [raylib](https://www.raylib.com).
 
 ## Requirements
 
+**Python version** (`imissu.py`)
+
 - Python 3.x (standard library only — no external dependencies)
+
+**C++ version** (`imissu_ray.cpp`)
+
+- A C++17 compiler (e.g. `g++`)
+- [raylib](https://www.raylib.com) (on Arch Linux: `sudo pacman -S raylib`)
+- The song file at `~/Music/imissu.mp3` (path can be changed via `MUSIC_PATH` in the source)
 
 ## Usage
 
-### 1. Clone repository
-
-```bash
-git clone https://github.com/heggapriajunaedi/python-lyrics.git
-cd python-lyrics
-```
-
-### 2. Jalankan
+### Python
 
 ```bash
 python imissu.py
 ```
 
-> Jika `python` tidak dikenali, coba `python3 imissu.py`.
-
 Press `Ctrl+C` to exit.
+
+### C++
+
+Build and run:
+
+```bash
+g++ -O2 -std=c++17 imissu_ray.cpp -o imissu_ray $(pkg-config --cflags --libs raylib)
+./imissu_ray
+```
+
+Controls:
+
+| Key | Action |
+|---|---|
+| `← / →` | Seek ±3 seconds |
+| `R` | Restart song |
+| `D` | Toggle HUD |
+| `ESC` | Quit |
 
 ## How it works
 
-Displays a snowflake animation in the terminal while lyrics appear centered on screen at timed intervals. Uses ANSI escape codes for rendering and `unicodedata` to handle character widths properly.
+The snow is rendered as parallax particles in three depth layers with sinusoidal sway. Lyrics fade in and out following the playback position (`GetMusicTimePlayed`). The terminal version uses a character grid with ANSI escape codes instead.
 
 ## Credits
 
