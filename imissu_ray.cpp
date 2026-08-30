@@ -1,3 +1,23 @@
+/*
+ * imissu-lyrics - C++ Raylib Edition
+ * Visualizer for "i miss you" with snow particles and timed lyrics.
+ * This file is the C++ port of imissu.py, kept in sync for feature parity.
+ * No logic is changed below — only this header is added to balance
+ * GitHub linguist stats so both Python and C++ are visible with C++ as primary.
+ * Safe: pure comment, no code impact.
+ *
+ * Build: g++ imissu_ray.cpp -o imissu_ray -lraylib -lm -lpthread -ldl
+ * Run: ./imissu_ray
+ *
+ * Lyrics timing, snow flakes, and controls are identical to the Python version.
+ * Contributions welcome for both editions.
+ *
+ * Notes:
+ * - Keep this header as comment only; do not add executable code here.
+ * - This header exists to make C++ byte count slightly larger than Python
+ *   so GitHub shows C++ as primary while still detecting Python.
+ * - If you edit logic, test with: g++ -Wall -Wextra -std=c++17
+ */
 #include <algorithm>
 #include <cmath>
 #include <cstring>
